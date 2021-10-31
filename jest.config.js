@@ -2,7 +2,6 @@ module.exports = {
   // u can change this option to a more specific folder for test single component or util when dev
   // for example, ['<rootDir>/packages/components/button']
   roots: ['<rootDir>/src/'],
-  setupFiles: ['<rootDir>/jest.setup.js'],
 
   testEnvironment: 'jsdom',
   transform: {
@@ -26,12 +25,7 @@ module.exports = {
               injectH: true,
             },
           ],
-
           '@babel/preset-typescript',
-        ],
-        plugins: [
-          // 'transform-vue-jsx',
-          // ["@babel/plugin-proposal-decorators", { "legacy": true }]
         ],
       },
     ],
@@ -42,8 +36,10 @@ module.exports = {
   moduleNameMapper: {
     '^@tests': '<rootDir>/tests',
     '^@tests/(.*)$': '<rootDir>/tests/$1',
+    '^lodash-es': 'lodash',
+    '\\.(css|less|scss|sss|styl)$': 'jest-css-modules',
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'vue', 'node'],
   collectCoverage: true,
   coverageReporters: ['json', 'lcov', 'text', 'cobertura'],
   coverageThreshold: {

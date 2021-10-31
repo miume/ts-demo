@@ -26,38 +26,79 @@ export type IxPublicPropTypes<O> = O extends object
   ? { [K in PublicRequiredKeys<O>]: InferPropType<O[K]> } & { [K in PublicOptionalKeys<O>]?: InferPropType<O[K]> }
   : { [K in string]: any }
 
-export interface record {
-    id: number,
-    name: string,
-    age: number,
-    description: string
+
+export interface TableItem {
+  id: number
+  name: string
+  age: number
+  description: string
+}
+
+export interface Pagination {
+  isSupport?: boolean
+  pageSize?: number
+}
+
+export interface ColumnsRecord {
+  name: string
+  index: string
+  renderFn?: Function
+  sortable?: boolean
+  sortFn?: Function
+}
+
+export interface SortParams {
+  name: string
+  direction: string
+}
+
+// 排序信息
+export enum SortDirection {
+  asc = 'ASC',
+  desc = 'DESC',
+  none = 'NONE'
 }
 
 // Props 定义在这里
 export const tableProps = {
-  test: {
-    type: Boolean,
-    default: false,
-  },
   columns: {
-    type: Array,
-    default: () => []
+    type: Array as PropType<Array<Record<string, any>>>,
+    default: () => [],
   },
   dataSource: {
-    type: Array,
-    default: () => []
+    type: Array as PropType<Array<Record<string, any>>>,
+    default: () => [],
   },
   showIndex: {
     type: Boolean,
     default: false
   },
-  total: {
-    type: Number,
-    default: 0
+  showHeader: {
+    type: Boolean,
+    default: true
   },
-  currentPage: {
-    type: Number,
-    default: 1
+  pagination: {
+    type: Object,
+    default: () => {
+      return {
+        isSupport: false,
+        pageSize: 10,
+        current: 1
+      }
+    },
+  },
+  sortParams: {
+    type: Object as PropType<SortParams>,
+    default: () => {
+      return {
+        name: '',
+        direction: ''
+      }
+    },
+  },
+  emptyText: {
+    type: String,
+    default: '暂无数据'
   }
 }
 

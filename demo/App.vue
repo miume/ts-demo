@@ -1,117 +1,136 @@
 <template>
   <div>
-    <sf-table :columns="columns"
-              :dataSource="data"
-              :showIndex=true
-              :total="total"
-              :current-page="currentPage">
+    <h2>显示分页,显示序号，显示表头，支持名称，年龄排序</h2>
+    <h3>
+      <button class="sf-button sf-button--primary" 
+              @click="changePagination">切换显示分页</button>
+      <button class="sf-button sf-button--primary"
+              @click="changeShowIndex">切换显示序号</button>
+      <button class="sf-button sf-button--primary"
+              @click="changeShowHeader">切换显示表头</button>
+    </h3>
+    
+    <sf-table ref="sfTable"
+              :columns="columns"
+              :dataSource="dataSource"
+              :pagination="pagination"
+              :sortParams="sortParams"
+              :showIndex="showIndex"
+              :showHeader="showHeader"
+    >
+      <template #id>
+        <div>
+          <a style='color: #409eff;cursor: pointer;'>删除</a>
+        </div>
+      </template>
     </sf-table>
   </div>
 </template>
 
 <script lang="ts">
-import { SfTable } from '../src/table'
-import { onMounted, ref, reactive } from '@vue/composition-api'
+import { SfTable } from '../src/table/ts/index'
+import { defineComponent, onMounted, reactive, ref } from '@vue/composition-api'
+import { SortParams, ColumnsRecord, Pagination, TableItem } from '../src/table/ts/types'
+import { getColumns, getData } from './data'
 
-interface record {
-  id: number,
-  name: string,
-  age: number,
-  description: string
-}
-
-interface columnsRecord {
-    name: string,
-    index: string,
-    sortable?: Boolean
-}
-
-export default 
-({
+export default defineComponent({
   name: 'App',
   components: {
-    SfTable
+    SfTable,
   },
   setup() {
 
-    let columns: columnsRecord[] = reactive([{
-      name: '名称',
-      index: 'name'
-    }, {
-      name: '年龄',
-      index: 'age',
-      sortable: true
-    }, {
-      name: '描述',
-      index: 'description'
-    }]);
+    // 表格实例
+    const sfTable = ref('')
 
-    let data: record[] = reactive([{
-            id: 1,
-            name: '名称',
-            age: 12,
-            description: '111'
-          }, {
-            id: 2,
-            name: '年龄',
-            age: 12,
-            description: '111'
-          }, {
-            id: 3,
-            name: '描述',
-            age: 14,
-            description: '111'
-          }]);
+    // 是否显示序号
+    const showIndex = ref(true)
 
-    let total: Number = ref(9);
-    let currentPage: Number = ref(1);
+    // 是否显示表头
+    const showHeader = ref(true)
 
-    const loadData = () => {
-        total = 9;
-        currentPage = 1;
-        data.push({
-            id: 4,
-            name: '名称',
-            age: 6,
-            description: '111'
-          }, {
-            id: 5,
-            name: '年龄',
-            age: 9,
-            description: '111'
-          }, {
-            id: 7,
-            name: '描述',
-            age: 19,
-            description: '111'
-          },{
-            id: 14,
-            name: '名称',
-            age: 16,
-            description: '111'
-          }, {
-            id: 15,
-            name: '年龄',
-            age: 9,
-            description: '111'
-          }, {
-            id: 17,
-            name: '描述',
-            age: 19,
-            description: '111'
-          });
-    };
-
-    onMounted(() => {
-        loadData();
+    // 默认排序参数
+    const sortParams: SortParams = reactive({
+      name: 'age',
+      direction: 'ASC',
     })
 
-    return { 
-        columns,
-        data,
-        total,
-        currentPage
-     }
-  },
+    // 默认分页参数
+    const pagination: Pagination = reactive({
+      isSupport: true,
+      pageSize: 10
+    })
+
+    // 列数据
+    const columns: ColumnsRecord[] = getColumns()
+
+    // 表格数据
+    const dataSource: TableItem[] = reactive([])
+
+    onMounted(() => {
+      let data = getData()
+      sfTable.value?.loadData(data)
+    })
+
+    const changePagination = () => {
+      pagination.isSupport = !pagination.isSupport;
+    }
+
+    const changeShowHeader = () => {
+      showHeader.value = !showHeader.value;
+    }
+
+    const changeShowIndex = () => {
+      showIndex.value = !showIndex.value;
+    }
+
+    return {
+      sfTable,
+      columns,
+      dataSource,
+      pagination,
+      sortParams,
+      showIndex,
+      showHeader,
+      changePagination,
+      changeShowHeader,
+      changeShowIndex
+    }
+  }
 })
 </script>
+
+<style>
+.sf-button {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    transition: .1s;
+    font-weight: 500;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.sf-button--primary {
+    background-color: #409eff;
+    border-color: #409eff;
+    margin-left: 5px;
+}
+
+.sf-button:focus, .sf-button:hover {
+    color: #409eff;
+    border-color: #c6e2ff;
+    background-color: #ecf5ff;
+}
+</style>
