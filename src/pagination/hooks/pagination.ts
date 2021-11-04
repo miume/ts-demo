@@ -1,25 +1,25 @@
 import { reactive, toRefs } from "@vue/composition-api"
 import debug from 'debug'
 
-const DEBUG = debug('pagination:')
+const LOG = debug('pagination info:')
 
-export default (props: number) => {
+export default () => {
 
     // 当前页
     const state = reactive({
-        cur: props
+        cur: 1
     })
 
     // 点击上一页
     const pre = () => {
         state.cur -= 1;
-        DEBUG('分页：','点击上一页')
+        LOG('分页：点击上一页')
     }
 
     // 点击下一页
     const next = () => {
         state.cur += 1;
-        DEBUG('分页：','点击下一页')
+        LOG('分页：点击下一页')
     }
 
     /**
@@ -28,7 +28,7 @@ export default (props: number) => {
      */
     const pageClick = (page: number) => {
         state.cur = page;
-        DEBUG('分页：',`您当前点击第${page}页`)
+        LOG(`分页：您当前点击第${page}页`)
     }
 
     return {

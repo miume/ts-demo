@@ -7,19 +7,19 @@ import './style/index.less'
 Vue.use(CompositionApi)
 
 export function mount(
-  options: { el: Element | string; routeBase: string; base: string } = {
-    el: '#app',
-    routeBase: '',
-    base: '',
-  },
+	options: { el: Element | string; routeBase: string; base: string } = {
+		el: '#app',
+		routeBase: '',
+		base: '',
+	},
 ): void {
-  const { el } = options
+	const { el } = options
 
-  const app = createApp({
-    render: () => h(App),
-  })
+	const app = createApp({
+		render: () => h(App),
+	})
 
-  app.mount(el)
+	app.mount(el)
 }
 
 mount()

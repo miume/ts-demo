@@ -1,21 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Table render 1`] = `
-"<div>
-  <div class=\\"sf-table\\">
-    <table>
-      <thead class=\\"sf-table-thead\\">
-        <tr>
-          <!---->
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <div class=\\"sf-table-empty\\">暂无数据</div>
-  </div>
-</div>"
-`;
-
 exports[`pagination render 1`] = `
 "<div class=\\"sf-pagination\\"><button type=\\"button\\" disabled=\\"disabled\\" class=\\"btn-pre\\"><i>上一页</i></button>
   <ul class=\\"sf-pager\\"></ul> <button type=\\"button\\" disabled=\\"disabled\\" class=\\"btn-next\\"><i>下一页</i></button>

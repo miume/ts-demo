@@ -36,7 +36,7 @@ module.exports = {
     'comma-style': ['error', 'last'],
     'comma-dangle': ['error', 'always-multiline'],
     'eol-last': 'error',
-    indent: [2, 2, { SwitchCase: 1 }],
+    indent: [4, 4, { SwitchCase: 1 }],
     'no-trailing-spaces': 'error',
     'object-curly-spacing': ['error', 'always'],
     quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
